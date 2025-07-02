@@ -70,67 +70,69 @@ const Task = () => {
   }
 
   return (
-    <div className="flex justify-center flex-col gap-5">
-      {/* Form */} 
-      <form className="flex gap-10 mx-auto" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Enter task"
-          className="border border-zinc-300 p-2 text-black w-100 text-sm rounded outline-1"
-          value={task}
-          onChange={handleInputChange}
-        />
-        <button
-          type="submit"
-          className="px-4 py-2 rounded border cursor-pointer hover:bg-gray-50 transition duration-300 ease-in-out"
-        >
-          Add Task
-        </button>
-      </form>
+   <div className="flex justify-center flex-col gap-5">
+  {/* Form */} 
+  <form className="flex gap-10 mx-auto" onSubmit={handleSubmit}>
+    <input
+      type="text"
+      placeholder="Enter task"
+      className="border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 p-2 text-black dark:text-white w-100 text-sm rounded outline-1 placeholder-gray-500 dark:placeholder-gray-400"
+      value={task}
+      onChange={handleInputChange}
+    />
+    <button
+      type="submit"
+      className="px-4 py-2 rounded border border-gray-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-black dark:text-white cursor-pointer hover:bg-gray-50 dark:hover:bg-zinc-700 transition duration-300 ease-in-out"
+    >
+      Add Task
+    </button>
+  </form>
 
-      {/* Filtering */}
-      <div className="my-5 flex text-center text-sm mx-auto">
-        <Button text={"All"} onClick={() => handleFilterChange("all")} isActive={selectedFilter === "all"}/>
-        <Button text={"Pending"} onClick={() => handleFilterChange("pending")} isActive={selectedFilter === "pending"}/>
-        <Button text={"Completed"} onClick={() => handleFilterChange("completed")} isActive={selectedFilter === "completed"}/>
-      </div>
+  {/* Filtering */}
+  <div className="my-5 flex text-center text-sm mx-auto">
+    <Button text={"All"} onClick={() => handleFilterChange("all")} isActive={selectedFilter === "all"}/>
+    <Button text={"Pending"} onClick={() => handleFilterChange("pending")} isActive={selectedFilter === "pending"}/>
+    <Button text={"Completed"} onClick={() => handleFilterChange("completed")} isActive={selectedFilter === "completed"}/>
+  </div>
 
-      {/* Display Tasks */}
+  {/* Display Tasks */}
 
-      {filteredTasks.map((task) => {
-        return (
-          <div
-            key={task.id}
-            className="flex items-center m-auto justify-between text-xl bg-gray-100 w-2xl py-4 px-2 rounded shadow-md"
+  {filteredTasks.length === 0 ? <p className="text-center text-black dark:text-white">No tasks found</p> : 
+  filteredTasks.map((task) => {
+    return (
+      <div
+        key={task.id}
+        className="flex items-center m-auto justify-between text-xl bg-gray-100 dark:bg-zinc-800 w-2xl py-4 px-2 rounded shadow-md border border-gray-200 dark:border-zinc-700"
+      >
+        <div className="flex gap-4">
+          <p>
+            <input
+              type="checkbox"
+              name="checkbox"
+              id="checkbox"
+              className="block h-8 w-5 cursor-pointer accent-gray-400 dark:accent-gray-300"
+              onChange={() => toggleChecked(task.id)}
+              checked={task.completed}
+            />
+          </p>
+          <p
+            className={
+              task.completed ? "line-through italic text-gray-500 dark:text-gray-400" : "no-underline italic text-black dark:text-white"
+            }
           >
-            <div className="flex gap-4">
-              <p>
-                <input
-                  type="checkbox"
-                  name="checkbox"
-                  id="checkbox"
-                  className="block h-8 w-5 cursor-pointer"
-                  onChange={() => toggleChecked(task.id)}
-                  checked={task.completed}
-                />
-              </p>
-              <p
-                className={
-                  task.completed ? "line-through italic" : "no-underline italic"
-                }
-              >
-                {task.todo}
-              </p>
-            </div>
-            <div>
-              <p className="cursor-pointer">
-                <MdDeleteOutline onClick={() => deleteItem(task.id)} />
-              </p>
-            </div>
-          </div>
-        );
-      })}
-    </div>
+            {task.todo}
+          </p>
+        </div>
+        <div>
+          <p className="cursor-pointer text-black dark:text-white hover:text-red-500 dark:hover:text-red-400 transition duration-200">
+            <MdDeleteOutline onClick={() => deleteItem(task.id)} />
+          </p>
+        </div>
+      </div>
+    );
+  })}
+
+</div>
   );
 };
 

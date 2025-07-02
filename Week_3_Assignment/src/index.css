@@ -1,5 +1,14 @@
 @import "tailwindcss";
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+@layer base{
+    html {
+        @apply transition-colors duration-300
+    }
+    body{
+        @apply bg-white dark:bg-gray-700
+    }
+}
 
 body{
     font-family: monospace;
